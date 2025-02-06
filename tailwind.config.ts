@@ -1,18 +1,34 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: [
+    darkMode: ["class"],
+    content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
+  	extend: {
+  		colors: {
+			purp: '#8497C5',
+			lav: '#8497C5',
+			olive: '#0D0E15',
+			olive2: '#0A0A0A',
+			gray: '#9B9B9B',
+  			background: 'var(--background)',
+  			foreground: 'var(--foreground)',
+			bitcoin: '#00ED89',
+  		},
+  		fontFamily: {
+  			english: ['english', 'sans-serif'],
+			geist: ['geist', 'sans-serif'],
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate"), require("tailwind-corner-smoothing"), require("tailwindcss-inner-border")],
 } satisfies Config;

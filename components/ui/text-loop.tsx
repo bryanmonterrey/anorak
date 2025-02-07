@@ -8,7 +8,7 @@ import {
   AnimatePresenceProps,
 } from 'motion/react';
 import { useState, useEffect, Children } from 'react';
-
+import { TextMorph } from '@/components/ui/text-morph';
 export type TextLoopProps = {
   children: React.ReactNode[];
   className?: string;
@@ -48,9 +48,9 @@ export function TextLoop({
   }, [items.length, interval, onIndexChange, trigger]);
 
   const motionVariants: Variants = {
-    initial: { y: 20, opacity: 0 },
+    initial: { y: 0, opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: -20, opacity: 0 },
+    exit: { y: 0, opacity: 0 },
   };
 
   return (
@@ -64,7 +64,7 @@ export function TextLoop({
           transition={transition}
           variants={variants || motionVariants}
         >
-          {items[currentIndex]}
+          <TextMorph>{items[currentIndex]}</TextMorph>
         </motion.div>
       </AnimatePresence>
     </div>

@@ -1,5 +1,19 @@
 import type { Config } from "tailwindcss";
 
+export const texts = {
+  // Add your text sizes here
+};
+
+export const shadows = {
+  // Add your shadows here
+};
+
+export const borderRadii = {
+  lg: 'var(--radius)',
+  md: 'calc(var(--radius) - 2px)',
+  sm: 'calc(var(--radius) - 4px)'
+};
+
 export default {
     darkMode: ["class"],
     content: [

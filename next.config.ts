@@ -2,18 +2,20 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
+    config.externals = [...(config.externals || []), 'os'];
     config.resolve.fallback = {
       ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
       crypto: require.resolve('crypto-browserify'),
       stream: require.resolve('stream-browserify'),
       buffer: require.resolve('buffer/'),
-    };
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@noble/ed25519': '@noble/ed25519/esm/index.js',
+      os: require.resolve('os-browserify/browser')
     };
     return config;
   },
+  
 };
 
 export default nextConfig;

@@ -1,74 +1,129 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Connection, PublicKey, LAMPORTS_PER_SOL, Keypair } from '@solana/web3.js';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { useWallet } from '@solana/wallet-adapter-react';
 
-// Dynamically import Elusiv with no SSR
-const ElusivComponent = dynamic(() => import('./elusiv'), { 
-  ssr: false,
-  loading: () => <div>Loading...</div>
-});
-
-const PrivateTransactionComponent = () => {
-  const [recipient, setRecipient] = useState('');
-  const [amount, setAmount] = useState('');
+export default function PrivateSend() {
+  const { publicKey, signMessage } = useWallet();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [status, setStatus] = useState('');
+  const [amount, setAmount] = useState('');
+  const [recipient, setRecipient] = useState('');
+
+  const handleTransfer = async () => {
+    if (!publicKey || !signMessage) {
+      setError('Please connect your wallet');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setStatus('Preparing transaction...');
+
+    try {
+      const message = 'Sign this message to enable private transactions';
+      const messageBytes = new TextEncoder().encode(message);
+      const signature = await signMessage(messageBytes);
+
+      setStatus('Processing private transaction...');
+      
+      const requestData = {
+        signature: Array.from(signature),
+        publicKey: publicKey.toBase58(),
+        amount,
+        recipient
+      };
+
+      console.log('Sending request:', {
+        ...requestData,
+        signature: 'REDACTED' // Don't log the full signature
+      });
+
+      const response = await fetch('/api/private-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestData)
+      });
+
+      const data = await response.json();
+      console.log('Received response:', data);
+
+      if (!response.ok) {
+        throw new Error(data.details || data.error || 'Failed to process transaction');
+      }
+
+      if (data.topUpSignature) {
+        setStatus(`Transaction complete!\nTop-up: ${data.topUpSignature}\nSend: ${data.sendSignature}`);
+      } else {
+        setStatus(`Transaction complete!\nSignature: ${data.signature}`);
+      }
+    } catch (err) {
+      console.error('Transfer error:', err);
+      setError(err.message);
+      setStatus('');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>Send Private Transaction</CardTitle>
+        <CardTitle>Send Private SOL</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Input
-            type="text"
-            placeholder="Recipient Public Key"
-            value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
-            disabled={loading}
-          />
-        </div>
-        <div className="space-y-2">
-          <Input
-            type="number"
-            placeholder="Amount (SOL)"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            disabled={loading}
-            min="0"
-            step="0.1"
-          />
-        </div>
-
-        <ElusivComponent 
-          recipient={recipient}
-          amount={amount}
-          onSuccess={(sig) => setSuccess(`Transaction sent! Signature: ${sig}`)}
-          onError={(err) => setError(err)}
-          onLoading={(isLoading) => setLoading(isLoading)}
+        <Input
+          placeholder="Recipient Public Key"
+          value={recipient}
+          onChange={(e) => setRecipient(e.target.value)}
+          disabled={loading}
         />
+        <Input
+          type="number"
+          placeholder="Amount SOL"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          min="0"
+          step="0.1"
+          disabled={loading}
+        />
+        <Button 
+          onClick={handleTransfer}
+          disabled={loading || !publicKey}
+          className="w-full"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              {status || 'Processing'}
+            </>
+          ) : (
+            'Send Private Transaction'
+          )}
+        </Button>
 
         {error && (
           <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription className="break-all">
+              {error}
+            </AlertDescription>
           </Alert>
         )}
 
-        {success && (
+        {status && !error && (
           <Alert>
-            <AlertDescription>{success}</AlertDescription>
+            <AlertDescription className="break-all whitespace-pre-line">
+              {status}
+            </AlertDescription>
           </Alert>
         )}
       </CardContent>
     </Card>
   );
-};
-
-export default PrivateTransactionComponent;
+}

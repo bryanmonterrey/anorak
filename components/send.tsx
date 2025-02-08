@@ -1,11 +1,11 @@
 import React from 'react'
-import PrivateTransactionComponent from './private'
+import PrivateSend from './private'
 
 const Send = () => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <h1>
-        <PrivateTransactionComponent />
+        <PrivateSend />
         </h1>
     </div>
   )

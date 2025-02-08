@@ -1,11 +1,11 @@
 import React from 'react'
-import PrivateSend from './private'
+import PrivateSendWrapper from './privateSendWrapper'
 
 const Send = () => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <h1>
-        <PrivateSend />
+        <PrivateSendWrapper />
         </h1>
     </div>
   )

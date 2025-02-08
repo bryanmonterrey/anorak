@@ -12,4 +12,6 @@ declare module '@elusiv/sdk' {
     buildSendTx(amount: number, recipient: import('@solana/web3.js').PublicKey, tokenType: string): Promise<any>;
     sendElusivTx(tx: any): Promise<{ signature: string }>;
   }
+
+  export type TokenType = 'LAMPORTS';
 } 

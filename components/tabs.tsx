@@ -314,7 +314,7 @@ const DirectionAwareTabsDemo = ({}) => {
     },
     {
       id: 1,
-      label: "shield",
+      label: "unshield",
       content: (
         <div className="flex flex-col items-center justify-center">
         <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center p-4 rounded-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-64">

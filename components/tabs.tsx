@@ -291,7 +291,7 @@ const DirectionAwareTabsDemo = ({}) => {
         <Input
               placeholder="wallet address or SNS name"
               value={recipient}
-              className="flex items-start justify-start w-full h-full file:text-lg placeholder:text-lg text-lg focus-visible:text-lg disabled:text-lg focus:text-lg font-medium file:font-medium placeholder:font-medium disabled:font-medium focus-visible:font-medium focus:font-medium"
+              className="flex items-start justify-start w-full h-full file:text-lg placeholder:text-lg text-lg focus-visible:text-lg disabled:text-lg focus:text-lg font-medium file:font-medium placeholder:font-medium disabled:font-medium focus-visible:font-medium focus:font-medium dark:focus-visible:ring-none active:ring-none focus:ring-none focus-visible:ring-none"
               onChange={(e) => setRecipient(e.target.value)}
               disabled={loading}
             />

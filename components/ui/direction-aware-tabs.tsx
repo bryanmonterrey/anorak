@@ -66,7 +66,7 @@ function DirectionAwareTabs({
     <div className=" flex flex-col items-start w-full">
       <div
         className={cn(
-          "flex mb-1 space-x-1 border border-none rounded-full cursor-pointer bg-transparent px-[3px] py-[3.2px] shadow-inner-shadow",
+          "flex space-x-1 border border-none rounded-full cursor-pointer bg-transparent px-[3px] py-[3.2px] shadow-inner-shadow",
           className,
           rounded
         )}
@@ -87,7 +87,7 @@ function DirectionAwareTabs({
             {activeTab === tab.id && (
               <motion.span
                 layoutId="bubble"
-                className="absolute inset-0 z-10 bg-zinc-400/20 text-white mix-blend-difference shadow-inner-shadow "
+                className="absolute inset-0 z-10 bg-zinc-400/30 text-white mix-blend-difference shadow-inner-shadow "
                 style={rounded ? { borderRadius: 9 } : { borderRadius: 9999 }}
                 transition={{ type: "spring", bounce: 0.19, duration: 0.4 }}
               />

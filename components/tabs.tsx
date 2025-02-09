@@ -20,7 +20,7 @@ import {
 } from '@lightprotocol/stateless.js';
 
 // Use Helius endpoint
-const RPC_URL = 'https://devnet.helius-rpc.com/?api-key=f09cbd78-a0f7-4b52-983c-71880b01240b';
+const RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=89acb127-21f1-48fd-a752-77abb2a7fd78';
 
 const DirectionAwareTabsDemo = ({}) => {
     const { publicKey, sendTransaction } = useWallet();
@@ -165,7 +165,7 @@ const DirectionAwareTabsDemo = ({}) => {
         const newBalance = await checkPrivateBalance(publicKey.toString());
         setPrivateBalance(newBalance);
   
-        console.log(`Sent ${amount} SOL to ${recipient}!\nTxId: https://explorer.solana.com/tx/${signatureSend}?cluster=devnet`);
+        console.log(`Sent ${amount} SOL to ${recipient}!\nTxId: https://explorer.solana.com/tx/${signatureSend}?cluster=mainnet`);
       } catch (err) {
         console.error('Transfer error:', err);
         setError(err.message || 'Failed to process transaction');
@@ -257,13 +257,23 @@ const DirectionAwareTabsDemo = ({}) => {
       label: "send",
       content: (
         <div className="flex flex-col items-center justify-center">
-        <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center p-4 rounded-t-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-48">
+        <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center justify-center p-4 rounded-t-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-48">
+        <div>
+            <span className="text-gray/80 text-sm font-medium absolute top-4 left-5">
+                You're sending
+            </span>
+        </div>
             <Input
-              type="number"
-              placeholder="amount of sol"
+              type="decimal"
+              inputMode="decimal"
+              placeholder="0"
               value={amount}
-              className="w-full h-full text-3xl flex items-center justify-center"
+              className="w-full h-full dark:focus-visible:ring-none active:ring-none focus:ring-none focus-visible:ring-none text-9xl md:text-8xl file:text-8xl focus-visible:text-8xl disabled:text-8xl border-none placeholder:text-8xl flex text-center items-center justify-center"
               onChange={(e) => setAmount(e.target.value)}
+              spellCheck="false"
+              pattern="^[0-9]*[.,]?[0-9]*$"
+              autoComplete="off"
+              autoCorrect="off"
               min="0"
               step="0.1"
               disabled={loading}
@@ -276,7 +286,7 @@ const DirectionAwareTabsDemo = ({}) => {
         <Input
               placeholder="wallet address or SNS name"
               value={recipient}
-              className="w-full h-full"
+              className="w-full h-full file:text-base placeholder:text-base text-base focus-visible:text-base disabled:text-base focus:text-base font-medium file:font-medium placeholder:font-medium disabled:font-medium focus-visible:font-medium focus:font-medium"
               onChange={(e) => setRecipient(e.target.value)}
               disabled={loading}
             />
@@ -284,7 +294,7 @@ const DirectionAwareTabsDemo = ({}) => {
         <Button 
         onClick={handleTransfer}
         disabled={loading || !publicKey}
-        className="bg-bitcoin/90 hover:bg-bitcoin mt-1 text-zinc-950 font-medium text-xl w-full flex flex-col items-center p-4 rounded-2xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-14 border-t-3 border-zinc-950 transition-all duration-300 ease-in-out">
+        className="bg-bitcoin/15 hover:bg-bitcoin/25 active:bg-bitcoin/35 mt-1 text-bitcoin font-medium text-xl w-full flex flex-col items-center p-4 rounded-2xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-14 border-t-3 border-zinc-950 transition-all duration-300 ease-in-out">
           {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -299,29 +309,38 @@ const DirectionAwareTabsDemo = ({}) => {
     },
     {
       id: 1,
-      label: "gift",
+      label: "shield",
       content: (
+        <div className="flex flex-col items-center justify-center">
         <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center p-4 rounded-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-64">
-          {publicKey && (
-              <Alert>
-                <AlertDescription>
-                  Available private balance: {loading ? 'Loading...' : privateBalance || '0'} SOL
-                </AlertDescription>
-              </Alert>
-            )}
+        <div>
+            <span className="text-gray/80 text-sm font-medium absolute top-4 left-5">
+                Amount to Unshield
+            </span>
+        </div>
             <Input
-              type="number"
+              type="decimal"
+              inputMode="decimal"
               placeholder="Amount to Unshield"
               value={unshieldAmount}
+              className="w-full h-full dark:focus-visible:ring-none active:ring-none focus:ring-none focus-visible:ring-none text-9xl md:text-8xl file:text-8xl focus-visible:text-8xl disabled:text-8xl border-none placeholder:text-4xl flex text-center items-center justify-center"
               onChange={(e) => setUnshieldAmount(e.target.value)}
               min="0"
               step="0.1"
               disabled={loading}
             />
-            <Button 
+            {publicKey && (
+                <div className="text-gray/80 text-sm font-medium flex flex-col items-center justify-center absolute top-4 right-4">
+              
+                  Available private balance: {loading ? 'Loading...' : privateBalance || '0'} SOL
+                
+              </div>
+            )}
+        </div>
+        <Button 
               onClick={handleUnshield}
               disabled={loading || !publicKey}
-              className="w-full"
+              className="w-full bg-bitcoin/15 hover:bg-bitcoin/25 active:bg-bitcoin/35 mt-1 text-bitcoin font-medium text-xl flex flex-col items-center p-4 rounded-2xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-14 border-t-3 border-zinc-950 transition-all duration-300 ease-in-out"
             >
               {loading ? (
                 <>
@@ -338,7 +357,7 @@ const DirectionAwareTabsDemo = ({}) => {
   ]
 
   return (
-    <div className="">
+    <div className="min-w-[45ch] max-w-[45ch]">
       <DirectionAwareTabs tabs={tabs} />
     </div>
   )

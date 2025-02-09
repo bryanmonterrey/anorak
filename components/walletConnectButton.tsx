@@ -13,6 +13,8 @@ import { Connection, clusterApiUrl, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { toast } from 'sonner';
 import { TextMorph } from '@/components/ui/text-morph';
 
+const RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=89acb127-21f1-48fd-a752-77abb2a7fd78';
+
 const WalletConnectButton = () => {
   const { wallet, connect, connected, disconnect, select, publicKey } = useWallet();
   
@@ -85,9 +87,9 @@ const WalletConnectButton = () => {
     const getBalance = async () => {
       if (publicKey) {
         try {
-          const connection = new Connection(clusterApiUrl('mainnet-beta'));
+          const connection = new Connection(RPC_URL);
           const balance = await connection.getBalance(publicKey);
-          setBalance(balance / LAMPORTS_PER_SOL); // Convert lamports to SOL
+          setBalance(balance / LAMPORTS_PER_SOL);
         } catch (error) {
           console.error('Error fetching balance:', error);
           setBalance(null);
@@ -136,8 +138,8 @@ const WalletConnectButton = () => {
     const getBalanceAndValue = async () => {
       if (publicKey) {
         try {
-          // Get SOL balance
-          const connection = new Connection(clusterApiUrl('devnet'));
+          // Get SOL balance using Helius RPC
+          const connection = new Connection(RPC_URL);
           const balance = await connection.getBalance(publicKey);
           const solBalance = balance / LAMPORTS_PER_SOL;
           setBalance(solBalance);

@@ -85,7 +85,7 @@ const WalletConnectButton = () => {
     const getBalance = async () => {
       if (publicKey) {
         try {
-          const connection = new Connection(clusterApiUrl('devnet'));
+          const connection = new Connection(clusterApiUrl('mainnet-beta'));
           const balance = await connection.getBalance(publicKey);
           setBalance(balance / LAMPORTS_PER_SOL); // Convert lamports to SOL
         } catch (error) {

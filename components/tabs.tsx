@@ -266,7 +266,7 @@ const DirectionAwareTabsDemo = ({}) => {
             <Input
               type="decimal"
               inputMode="decimal"
-              placeholder="0"
+              placeholder="0.07 sol"
               value={amount}
               className="w-full h-full dark:focus-visible:ring-none active:ring-none focus:ring-none focus-visible:ring-none text-9xl md:text-8xl file:text-8xl focus-visible:text-8xl disabled:text-8xl border-none placeholder:text-8xl flex text-center items-center justify-center"
               onChange={(e) => setAmount(e.target.value)}

@@ -252,14 +252,11 @@ export default function PrivateSolOperations() {
 
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Private SOL Operations</CardTitle>
-      </CardHeader>
       <CardContent>
         <Tabs defaultValue="send" className="space-y-4">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="send">Send Private SOL</TabsTrigger>
-            <TabsTrigger value="unshield">Unshield SOL</TabsTrigger>
+            <TabsTrigger value="send">Send</TabsTrigger>
+            <TabsTrigger value="unshield">Unshield</TabsTrigger>
           </TabsList>
 
           <TabsContent value="send" className="space-y-4">

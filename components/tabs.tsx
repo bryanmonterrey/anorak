@@ -280,9 +280,6 @@ const DirectionAwareTabsDemo = ({}) => {
             />
         </div>
         <div className="bg-zinc-400/15 mt-0.5 text-white/80 w-full flex flex-col items-center p-4 rounded-b-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-20 border-t-3 border-zinc-950">
-          
-        </div>
-        <div className="bg-zinc-400/15 mt-1 text-white/80 w-full relative flex flex-col items-center p-4 rounded-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-20 border-t-3 border-zinc-950">
         <div className="relative flex w-full items-start justify-start">
             <span className="text-gray/80 text-sm font-medium absolute left-1">
                 To

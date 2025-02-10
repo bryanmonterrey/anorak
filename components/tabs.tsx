@@ -258,8 +258,8 @@ const DirectionAwareTabsDemo = ({}) => {
       content: (
         <div className="flex flex-col items-center justify-center">
         <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center justify-center p-4 rounded-t-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-48">
-        <div>
-            <span className="text-gray/80 text-sm font-medium absolute top-4 left-5">
+        <div className="relative w-full items-start justify-start">
+            <span className="text-gray/80 text-sm font-medium absolute left-1">
                 You're sending
             </span>
         </div>
@@ -280,7 +280,7 @@ const DirectionAwareTabsDemo = ({}) => {
             />
         </div>
         <div className="bg-zinc-400/15 mt-0.5 text-white/80 w-full flex flex-col items-center p-4 rounded-b-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-20 border-t-3 border-zinc-950">
-        <div className="relative flex w-full items-start justify-start">
+        <div className="relative w-full items-start justify-start">
             <span className="text-gray/80 text-sm font-medium absolute left-1">
                 To
             </span>
@@ -315,8 +315,8 @@ const DirectionAwareTabsDemo = ({}) => {
       content: (
         <div className="flex flex-col items-center justify-center">
         <div className="bg-zinc-400/15 text-white/80 w-full flex flex-col items-center p-4 rounded-3xl gap-3 outline outline-1 outline-[rgb(132,151,197,0.01)] outline-offset-[-1px] shadow-sm h-64">
-        <div>
-            <span className="text-gray/80 text-sm font-medium absolute top-4 left-5">
+        <div className="relative w-full items-start justify-start">
+            <span className="text-gray/80 text-sm font-medium absolute left-1">
                 Amount to Unshield
             </span>
         </div>
